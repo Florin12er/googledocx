@@ -38,6 +38,7 @@ body {
     --gray-2: #a09da5;
     --gray-3: #7c7a7e;
     --blue: #006fe2;
+    --blue-contrast: #1e40af;
   }
 
   .dark {
@@ -141,32 +142,38 @@ body {
   h5,
   h6 {
     line-height: 1.1;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
     text-wrap: pretty;
   }
 
   h1,
   h2 {
-    margin-top: 3.5rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   h1 {
-    font-size: 1.4rem;
+    font-size: 38px;
   }
 
   h2 {
-    font-size: 1.2rem;
+    font-size: 30px;
   }
 
   h3 {
-    font-size: 1.1rem;
+    font-size: 26px;
   }
 
-  h4,
-  h5,
+  h4 {
+    font-size: 22px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+
   h6 {
-    font-size: 1rem;
+    font-size: 18px;
   }
 
   /* Table-specific styling */
@@ -240,6 +247,32 @@ body {
 
     &.ProseMirror-selectednode {
       outline: 3px solid var(--blue);
+    }
+  }
+
+  mark {
+    background-color: #faf594;
+    border-radius: 0.3rem;
+    border: 1px solid #faf594;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+  }
+
+  code {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  /* Link styles */
+  a {
+    color: var(--blue);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--blue-contrast);
     }
   }
 }
