@@ -16,6 +16,12 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { HeadingLevelButton } from "./heading-button";
 import { FontFamilyButton } from "./font-family-button";
 import { TextColorButton } from "./text-color-button";
@@ -24,28 +30,43 @@ import { LinkButton } from "./link-button";
 import { ImageButton } from "./image-button";
 import { AlignButton } from "./align-button";
 import { ListButton } from "./list-button";
+import { FontsizeButton } from "./font-size-button";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive?: boolean;
   icon: LucideIcon;
+  label: string;
+  shortCut?: string;
 }
 
 const ToolbarButton = ({
   onClick,
   isActive,
   icon: Icon,
+  shortCut,
+  label,
 }: ToolbarButtonProps) => {
   return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-        isActive && "bg-neutral-400/80",
-      )}
-    >
-      <Icon className="size-4" />
-    </button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={onClick}
+            className={cn(
+              "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
+              isActive && "bg-neutral-400/80",
+            )}
+          >
+            <Icon className="size-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-neutral-700 rounded-sm flex gap-2">
+          <p>{label}</p>
+          {shortCut && <p className="text-xs text-zinc-400">{shortCut}</p>}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 export const Toolbar = () => {
@@ -53,6 +74,7 @@ export const Toolbar = () => {
 
   const sections: {
     label: string;
+    shortCut?: string;
     icon: LucideIcon;
     onClick: () => void;
     isActive?: boolean;
@@ -60,6 +82,7 @@ export const Toolbar = () => {
     [
       {
         label: "Undo",
+        shortCut: "Ctrl+Z",
         icon: Undo2Icon,
         onClick: () => {
           editor?.chain().focus().undo().run();
@@ -67,6 +90,7 @@ export const Toolbar = () => {
       },
       {
         label: "Redo",
+        shortCut: "Ctrl+Y",
         icon: Redo2Icon,
         onClick: () => {
           editor?.chain().focus().redo().run();
@@ -74,6 +98,7 @@ export const Toolbar = () => {
       },
       {
         label: "Print",
+        shortCut: "Ctrl+P",
         icon: PrinterIcon,
         onClick: () => {
           window.print();
@@ -94,24 +119,28 @@ export const Toolbar = () => {
     [
       {
         label: "Bold",
+        shortCut: "Ctrl+B",
         icon: BoldIcon,
         isActive: editor?.isActive("bold"),
         onClick: () => editor?.chain().focus().toggleBold().run(),
       },
       {
         label: "Italic",
+        shortCut: "Ctrl+I",
         icon: ItalicIcon,
         isActive: editor?.isActive("italic"),
         onClick: () => editor?.chain().focus().toggleItalic().run(),
       },
       {
         label: "Underline",
+        shortCut: "Ctrl+U",
         icon: UnderlineIcon,
         isActive: editor?.isActive("underline"),
         onClick: () => editor?.chain().focus().toggleUnderline().run(),
       },
       {
         label: "Strikethrough",
+        shortCut: "Ctrl+Shift+S",
         icon: StrikethroughIcon,
         isActive: editor?.isActive("strike"),
         onClick: () => editor?.chain().focus().toggleStrike().run(),
@@ -127,6 +156,7 @@ export const Toolbar = () => {
       {
         label: "List Todo",
         icon: ListTodoIcon,
+        shortCut: "Ctrl+Shift+9",
         onClick: () => editor?.chain().focus().toggleTaskList().run(),
         isActive: editor?.isActive("taskList"),
       },
@@ -147,6 +177,8 @@ export const Toolbar = () => {
       <FontFamilyButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       <HeadingLevelButton />
+      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
+      <FontsizeButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />

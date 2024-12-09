@@ -1,3 +1,4 @@
+import { ToolTip } from "@/components/ui/custom-tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,8 +30,10 @@ export const ListButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 overflow-hidden">
-          <ListIcon className="h-4 w-4" />
+        <button className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 overflow-hidden text-sm">
+          <ToolTip content="Insert list">
+            <ListIcon className="h-4 w-4" />
+          </ToolTip>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-1 flex flex-col gap-y-1">

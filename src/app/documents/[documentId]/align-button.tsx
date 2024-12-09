@@ -1,3 +1,4 @@
+import { ToolTip } from "@/components/ui/custom-tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,7 +47,9 @@ export const AlignButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 overflow-hidden">
-          <AlignLeftIcon className="h-4 w-4" />
+          <ToolTip content="Align text">
+            <AlignLeftIcon className="h-4 w-4" />
+          </ToolTip>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-1 flex flex-col gap-y-1">

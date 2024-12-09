@@ -16,6 +16,7 @@ import {
 import { useEditorStore } from "@/store/use-editor-store";
 import { useState } from "react";
 import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
+import { ToolTip } from "@/components/ui/custom-tooltip";
 
 export const ImageButton = () => {
   const { editor } = useEditorStore();
@@ -52,7 +53,9 @@ export const ImageButton = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
-            <ImageIcon className="size-4" />
+            <ToolTip content="Insert image">
+              <ImageIcon className="size-4" />
+            </ToolTip>
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

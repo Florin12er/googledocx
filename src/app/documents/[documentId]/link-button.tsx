@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useEditorStore } from "@/store/use-editor-store";
 import { Copy, Link2Icon } from "lucide-react";
+import { ToolTip } from "@/components/ui/custom-tooltip";
 
 const DEFAULT_URL = "https://";
 const COPY_TIMEOUT = 2000;
@@ -67,6 +68,25 @@ export const LinkButton: React.FC = () => {
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
+  useEffect(() => {
+    const handleKeyDownShortcut = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === "L") {
+        e.preventDefault();
+        setDropdownOpen((prev) => !prev);
+        if (!dropdownOpen) {
+          // Focus input only when opening
+          setTimeout(() => inputRef.current?.focus(), 0);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDownShortcut);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDownShortcut);
+    };
+  }, [dropdownOpen]);
+
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
@@ -74,8 +94,10 @@ export const LinkButton: React.FC = () => {
           className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
           onClick={handleDropdownOpen}
         >
-          <Link2Icon className="size-4" />
-          <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
+          <ToolTip content="Insert link" shortCut="Ctrl+Shift+L">
+            <Link2Icon className="size-4" />
+            <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
+          </ToolTip>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
