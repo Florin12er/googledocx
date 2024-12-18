@@ -31,6 +31,7 @@ import { ImageButton } from "./image-button";
 import { AlignButton } from "./align-button";
 import { ListButton } from "./list-button";
 import { FontsizeButton } from "./font-size-button";
+import { LineHeightButton } from "./line-height-button";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -161,7 +162,7 @@ export const Toolbar = () => {
         isActive: editor?.isActive("taskList"),
       },
       {
-        label: "Remove Formatting",
+        label: "Clear Formatting",
         icon: RemoveFormattingIcon,
         onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
@@ -190,6 +191,7 @@ export const Toolbar = () => {
       <LinkButton />
       <ImageButton />
       <AlignButton />
+      <LineHeightButton />
       <ListButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
 
