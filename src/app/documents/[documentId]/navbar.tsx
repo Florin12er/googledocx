@@ -38,6 +38,7 @@ import { Input } from "@/components/ui/input";
 import { useEditorStore } from "@/store/use-editor-store";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { OrganizationSwitcher, UserButton } from "@clerk/clerk-react";
 
 export const Navbar = () => {
   const { editor } = useEditorStore();
@@ -302,6 +303,15 @@ export const Navbar = () => {
             </Menubar>
           </div>
         </div>
+      </div>
+      <div className="flex items-center gap-3 pl-6">
+        <OrganizationSwitcher
+          afterCreateOrganizationUrl="/"
+          afterLeaveOrganizationUrl="/"
+          afterSelectOrganizationUrl="/"
+          afterSelectPersonalUrl="/"
+        />
+        <UserButton />
       </div>
     </nav>
   );

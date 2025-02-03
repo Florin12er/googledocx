@@ -4,7 +4,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./globals.css";
 import ConvexClientProvider from "@/components/ui/convex-client-provider";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",

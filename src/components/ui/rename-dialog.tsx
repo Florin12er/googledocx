@@ -39,8 +39,11 @@ export const RenameDialog = ({
     setIsUpdating(true);
 
     update({ id: documentId, title: title.trim() || "Untitled" })
-      .catch(() => toast.error("Something went wrong"))
-      .then(() => toast.success("Document renamed"))
+      .catch(() =>
+        toast.error(
+          "Access Denied: You don’t have permission to rename this document. Only admins can perform this action."
+        )
+      )
       .finally(() => {
         setIsUpdating(false);
         setOpen(false);

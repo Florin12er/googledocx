@@ -20,7 +20,6 @@ export function DocumentRow({ document }: DocumentRowProps) {
   const onRowClick = () => {
     router.push(`/documents/${document._id}`);
   };
-
   return (
     <TableRow className="cursor-pointer" onClick={onRowClick}>
       <TableCell className="w-[50px]">

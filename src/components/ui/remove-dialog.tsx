@@ -52,10 +52,9 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
               setIsRemoving(true);
               remove({ id: documentId })
                 .catch(() => {
-                  toast.error("Something went wrong");
-                })
-                .then(() => {
-                  toast.success("Document deleted");
+                  toast.error(
+                    "Access Denied: You don’t have permission to delete this document. Only admins can perform this action."
+                  );
                 })
                 .finally(() => {
                   setIsRemoving(false);
