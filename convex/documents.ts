@@ -3,6 +3,24 @@ import { ConvexError, v } from "convex/values";
 import { paginationOptsValidator } from "convex/server";
 import { Doc } from "./_generated/dataModel";
 
+export const getByIds = query({
+  args: { ids: v.array(v.id("documents")) },
+  handler: async (ctx, { ids }) => {
+    const documents = [];
+
+    for (const id of ids) {
+      const document = await ctx.db.get(id);
+
+      if (document) {
+        documents.push({ id: document._id, name: document.title });
+      } else {
+        documents.push({ id, name: "Document not found" });
+      }
+    }
+    return documents;
+  },
+});
+
 export const getDocuments = query({
   args: {
     paginationOpts: paginationOptsValidator,
@@ -86,7 +104,7 @@ const hasPermission = (user: any, document: Doc<"documents">) => {
   const organizationRole = user.organization_role ?? undefined;
   const isAdmin =
     organizationRole === "org:admin" &&
-    document.organizationId === organizationId;
+    !!(document.organizationId && document.organizationId === organizationId);
   const isOwner = document.ownerId === user.subject;
 
   return isOwner || isAdmin;
@@ -126,5 +144,12 @@ export const updateById = mutation({
     }
 
     return await ctx.db.patch(args.id, { title: args.title });
+  },
+});
+
+export const getById = query({
+  args: { id: v.id("documents") },
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
   },
 });

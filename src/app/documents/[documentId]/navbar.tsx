@@ -12,6 +12,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { BsFilePdf } from "react-icons/bs";
+import { Avatars } from "./avatars";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -39,6 +40,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { OrganizationSwitcher, UserButton } from "@clerk/clerk-react";
+import { Inbox } from "./inbox";
 
 export const Navbar = () => {
   const { editor } = useEditorStore();
@@ -305,6 +307,8 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-3 pl-6">
+        <Avatars />
+        <Inbox />
         <OrganizationSwitcher
           afterCreateOrganizationUrl="/"
           afterLeaveOrganizationUrl="/"

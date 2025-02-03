@@ -1,19 +1,25 @@
 import React, { useRef, useState } from "react";
+import { useStorage, useMutation } from "@liveblocks/react";
 
 const markers = Array.from(
   {
     length: 83,
   },
-  (_, i) => i,
+  (_, i) => i
 );
 
 export const Ruler = () => {
   const PAGE_WIDTH = 816;
   const MINIMUM_SPACE = 100;
   const MARGIN_SPACE = 56;
-
-  const [leftMargin, setLeftMargin] = useState(MARGIN_SPACE);
-  const [rightMargin, setRightMargin] = useState(MARGIN_SPACE);
+  const leftMargin = useStorage((root) => root.leftMargin) ?? MARGIN_SPACE;
+  const setLeftMargin = useMutation(({ storage }, position: number) => {
+    storage.set("leftMargin", position);
+  }, []);
+  const rightMargin = useStorage((root) => root.rightMargin) ?? MARGIN_SPACE;
+  const setRightMargin = useMutation(({ storage }, position: number) => {
+    storage.set("rightMargin", position);
+  }, []);
 
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
@@ -42,7 +48,7 @@ export const Ruler = () => {
           const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
           const constrainedRightPosition = Math.min(
             newRightPosition,
-            maxRightPosition,
+            maxRightPosition
           );
           setRightMargin(constrainedRightPosition);
         }

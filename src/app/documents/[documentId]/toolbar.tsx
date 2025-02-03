@@ -56,7 +56,7 @@ const ToolbarButton = ({
             onClick={onClick}
             className={cn(
               "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-              isActive && "bg-neutral-400/80",
+              isActive && "bg-neutral-400/80"
             )}
           >
             <Icon className="size-4" />
@@ -112,7 +112,7 @@ export const Toolbar = () => {
           const current = editor?.view.dom.getAttribute("spellcheck");
           editor?.view.dom.setAttribute(
             "spellcheck",
-            current === "false" ? "true" : "false",
+            current === "false" ? "true" : "false"
           );
         },
       },
@@ -151,8 +151,8 @@ export const Toolbar = () => {
       {
         label: "Comment",
         icon: MessageSquarePlusIcon,
-        onClick: () => console.log("Todo : Comment"),
-        isActive: false,
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
+        isActive: editor?.isActive("liveblocksCommentMark"),
       },
       {
         label: "List Todo",
