@@ -1,7 +1,7 @@
 import { ToolTip } from "@/components/ui/custom-tooltip";
 import { useEditorStore } from "@/store/use-editor-store";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export const FontsizeButton = () => {
   const { editor } = useEditorStore();
@@ -52,18 +52,6 @@ export const FontsizeButton = () => {
     }
   };
 
-  // Function to handle keyboard shortcuts
-  const handleKeyboardShortcuts = (e: KeyboardEvent) => {
-    if (e.altKey && e.key === "+") {
-      e.preventDefault();
-      increment();
-    }
-    if (e.altKey && e.key === "-") {
-      e.preventDefault();
-      decrement();
-    }
-  };
-
   const increment = () => {
     const newFontSize = Math.min(parseInt(fontSize) + 1, MAX_FONT_SIZE);
     updateFontSize(newFontSize.toString());
@@ -76,13 +64,27 @@ export const FontsizeButton = () => {
     }
   };
 
+  const handleKeyboardShortcuts = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.altKey && e.key === "+") {
+        e.preventDefault();
+        increment();
+      }
+      if (e.altKey && e.key === "-") {
+        e.preventDefault();
+        decrement();
+      }
+    },
+    [increment, decrement]
+  ); // Include increment and decrement in the dependency array
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyboardShortcuts);
 
     return () => {
       window.removeEventListener("keydown", handleKeyboardShortcuts);
     };
-  }, [fontSize]);
+  }, [handleKeyboardShortcuts]); // Use the memoized version of handleKeyboardShortcuts
 
   return (
     <div className="flex items-center gap-x-0.5">

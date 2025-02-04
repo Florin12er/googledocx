@@ -55,7 +55,9 @@ export default function TemplateGalery() {
                 >
                   <button
                     disabled={isCreating}
-                    onClick={() => createDocument(template.label, "")}
+                    onClick={() =>
+                      createDocument(template.label, template.initialContent)
+                    }
                     style={{
                       backgroundImage: `url(${template.imageUrl})`,
                       backgroundSize: "cover",

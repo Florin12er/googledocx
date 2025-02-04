@@ -2,7 +2,6 @@ import { useEditorStore } from "@/store/use-editor-store";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
@@ -58,7 +57,7 @@ export const HeadingLevelButton = () => {
               "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
               (value === 0 && !editor?.isActive("heading")) ||
                 (editor?.isActive("heading", { level: value }) &&
-                  "bg-neutral-400/80"),
+                  "bg-neutral-400/80")
             )}
           >
             {label}

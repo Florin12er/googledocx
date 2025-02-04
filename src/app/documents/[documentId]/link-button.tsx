@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Editor } from "@tiptap/core";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -13,11 +14,11 @@ import { ToolTip } from "@/components/ui/custom-tooltip";
 const DEFAULT_URL = "https://";
 const COPY_TIMEOUT = 2000;
 
-const useLinkValue = (editor: any) => {
+const useLinkValue = (editor: Editor | null) => {
   const [value, setValue] = useState(DEFAULT_URL);
 
   useEffect(() => {
-    if (!editor) return;
+    if (!editor) return; // Ensure editor is available before running effect
 
     const updateValue = () => {
       const currentHref = editor.getAttributes("link")?.href || DEFAULT_URL;
@@ -25,7 +26,10 @@ const useLinkValue = (editor: any) => {
     };
 
     editor.on("transaction", updateValue);
-    return () => editor.off("transaction", updateValue);
+
+    return () => {
+      editor.off("transaction", updateValue);
+    };
   }, [editor]);
 
   return [value, setValue] as const;
